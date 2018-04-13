@@ -1,6 +1,7 @@
 /**
  * This file is to validate the fields
  */
+
 function validLogin() {
 
 	if (document.welcomepage.onlineid.value == "") {

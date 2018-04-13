@@ -1,3 +1,4 @@
+<%@ page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -51,7 +52,100 @@
 			information etc. The system also provides security to their accounts
 			with authentication facility. </span>
 	</div>
-	<form name="welcomepage" action="redirectWelcomePage.jsp" method="POST" onsubmit = "return validLogin();">
+	<form name="welcomepage" action="redirectWelcomePage.jsp" method="POST"
+		onsubmit="return validLogin();">
+
+		<%
+			int noOfRecords = 0;
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
+
+				String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
+				String username = "rpoloju";
+				String password = "cop5725#";
+
+				Connection connection = null;
+				Statement st = null;
+				ResultSet rs = null;
+
+				connection = DriverManager.getConnection(URL, username, password);
+				int recordsInCurrentTable = 0;
+				String sql1 = "select count(*) from ACCOUNT";
+				String sql2 = "select count(*) from CLIENT";
+				String sql3 = "select count(*) from ORDERS";
+				String sql4 = "select count(*) from USERS";
+				String sql5 = "select count(*) from DISTRICT";
+				String sql6 = "select count(*) from TRANSACTIONS";
+				String sql7 = "select count(*) from DISPOSITION";
+				String sql8 = "select count(*) from LOGIN_TO";
+				String sql9 = "select count(*) from OPENED_AT";
+				String sql10 = "select count(*) from CREATES";
+				st = connection.createStatement();
+				rs = st.executeQuery(sql1);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql2);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql3);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql4);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql5);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql6);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql7);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql8);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql9);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				rs = st.executeQuery(sql10);
+				if (rs.next()) {
+					recordsInCurrentTable += rs.getInt(1);
+				}
+				
+				noOfRecords = recordsInCurrentTable;
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				out.println("Record count fetch failed");
+				e.printStackTrace();
+			}
+		%>
+
+
+		<table width="800px" border=0 align="center">
+			<tr>
+				<td align="right"><input onclick="displayResult('<%=noOfRecords%>')" type = "button" value = "Records" id = "recordsbutton"></input></td>
+			</tr>
+		</table>
 		<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -83,4 +177,11 @@
 		</table>
 	</form>
 </body>
+<script language="javascript">
+	function displayResult(records) {
+		var elem = document.getElementById("recordsbutton");
+		if (elem.value=="Records") elem.value = records;
+    	else elem.value = "Records";
+	}
+</script>
 </html>

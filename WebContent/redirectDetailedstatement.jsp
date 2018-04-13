@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,31 +10,54 @@
 	padding: 10px;
 }
 </style>
-<title>Admin Login page</title>
+<title>Detailed Statement</title>
 </head>
 <body>
-	<form name="adminloginpage" action="adminLoginPage.jsp" method="POST" onsubmit = "return validLogin();">
+
 	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
 	<table width="800px" border=0 align="center">
 		<tr>
-			<td align="right"><a href="index.jsp"
-				style="color: #000000;">Home</a></td>
+			<td align="right"><a href="homepage.jsp" style="color: #000000;">Account
+					Home</a></td>
 		</tr>
 	</table>
+	<br/>
+	<br/>
+	<%
+		String user = "";
+		String startDate = "";
+		String endDate = "";
+		if (session.getAttribute("userid") != null) {
+			user = session.getAttribute("userid").toString();
+			
+			
+			
+	%>
 	<table border="0" align="center">
 			<tbody>
 				<tr>
-					<td>Admin id :</td>
-					<td><input type="text" name="adminid" value="" size="20"></td>
-				</tr>
-				<tr>
-					<td>PassCode :</td>
+					<td>Start Date :</td>
+					<td><input type="text" name="onlineid" value="" size="20"></td>
+					<td>End Date :</td>
 					<td><input type="password" name="passcode" value="" size="20"></td>
 					<td><input type="submit" value="Sign in" name="signin"></td>
 					<td><input type="reset" value="Cancel" name="clear"></td>
 				</tr>
 			</tbody>
 		</table>
-	</form>
+	
+	
+	
+	<%
+			session.setAttribute("userid", user);
+			session.setAttribute("startDate", startDate);
+			session.setAttribute("endDate", endDate);
+			String redirectURL = "detailedstatement.jsp";
+			response.sendRedirect(redirectURL);
+	%>
+
+
+
+<%} %>
 </body>
 </html>

@@ -16,6 +16,12 @@
 <body>
 	<form name="changepasscode" action="changepasscodepage.jsp" method="POST" onsubmit="return forgotpasscodecheck();">
 	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+	<table width="800px" border=0 align="center">
+		<tr>
+			<td align="right"><a href="index.jsp"
+				style="color: #000000;">Home</a></td>
+		</tr>
+	</table>
 	<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -28,7 +34,7 @@
 				</tr>
 				<tr>
 					<td><input type="submit" value="Update" name="updatePassCode"></td>
-					<td><input type="reset" value="Cancel" name="clear"></td>
+					<td><input type="reset" value="Clear" name="clear"></td>
 				</tr>
 			</tbody>
 		</table>

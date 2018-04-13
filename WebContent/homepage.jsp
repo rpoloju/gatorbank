@@ -27,7 +27,7 @@
 		<%=user%></h3>
 	<%
 		int dateOfTrans = 0;
-			int accountBalance = 0;
+			float accountBalance = 0;
 			try {
 				Class.forName("oracle.jdbc.OracleDriver");
 
@@ -47,7 +47,7 @@
 				rs = st.executeQuery(balance);
 				if (rs.next()) {
 					dateOfTrans = rs.getInt(1);
-					accountBalance = rs.getInt(2);
+					accountBalance = rs.getFloat(2);
 				}
 				if (connection != null)
 					connection.close();
@@ -55,6 +55,9 @@
 				out.println("Login failed");
 				e.printStackTrace();
 			}
+	%>
+	<%
+		if (dateOfTrans != 0) {
 	%>
 	<h3>
 		Last transaction is made on:
@@ -66,6 +69,9 @@
 					+ Character.toString(lastDate.charAt(2)) + Character.toString(lastDate.charAt(3));
 	%>
 		<%=month + "-" + day + "-" + year%></h3>
+	<%} else { %>
+	<h3>No transactions for this account.</h3>
+	<%} %>
 	<table border="0" align="center">
 		<tbody>
 			<tr>
@@ -80,7 +86,7 @@
 					<a href="ministatement.jsp">Mini Statement</a>
 				</div></td>
 			<td><div align="center">
-					<a href="detailedstatement.jsp">Detailed Statement</a>
+					<a href="detailedstatementDate.jsp">Detailed Statement</a>
 				</div></td>
 			<td><div align="center">
 					<a href="transferfunds.jsp">Transfer funds</a>

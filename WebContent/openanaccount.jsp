@@ -31,8 +31,8 @@
 			<tbody>
 				<tr>
 					<td>Gender :</td>
-					<td><input type="radio" name="sex" value="0" checked="checked">Female</td>
-					<td><input type="radio" name="sex" value="1">Male</td>
+					<td><input type="radio" name="gender" value="0" checked="checked">Female</td>
+					<td><input type="radio" name="gender" value="1">Male</td>
 				</tr>
 				<tr>
 					<td>Date of Birth (mmddyyyy) :</td>
