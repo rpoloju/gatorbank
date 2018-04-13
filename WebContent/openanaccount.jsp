@@ -91,7 +91,7 @@
 		</table>
 		<table border="0" align="center">
 			<tr>
-				<td><p>Please note that all transactions of authorized user will reflect on your account. Please click on "Create" to get your account id(s)</p></td>
+				<td><p>Please click on "Create" to get your account id(s)</p></td>
 			</tr>
 		</table>
 </form>

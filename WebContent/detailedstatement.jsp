@@ -30,8 +30,11 @@
 		String endDate = "";
 		if (session.getAttribute("userid") != null) {
 			user = session.getAttribute("userid").toString();
-			startDate = session.getAttribute("startDate").toString();
-			endDate = session.getAttribute("endDate").toString();
+			startDate = request.getParameter("startDate").toString();
+			endDate = request.getParameter("endDate").toString();
+			
+			System.out.println("Start date is " + startDate);
+			System.out.println("End date is " + endDate);
 	%>
 
 	<table width="750" border="2" align="center" cellpadding="2"
@@ -63,6 +66,8 @@
 		<%
 		int transactionid = 0;
 		int transDate = 0;
+		int stDate = 0;
+		int eDate = 0;
 		String type = "";
 		String operation = "";
 		float amount = 0;
@@ -75,13 +80,20 @@
 					String username = "rpoloju";
 					String password = "cop5725#";
 
+					//Get start and end dates in required formats
+					String date1 = startDate.substring(4, 6) + "" + startDate.substring(6, 8) + "" + startDate.substring(0, 4);
+					stDate = Integer.parseInt(date1);
+					String date2 = endDate.substring(4, 6) + "" + endDate.substring(6, 8) + "" + endDate.substring(0, 4);
+					eDate = Integer.parseInt(date2);
+					
+					
 					Connection connection = null;
 					Statement st = null;
 					ResultSet rs = null;
 					connection = DriverManager.getConnection(URL, username, password);
 					String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE from TRANSACTIONS " +
-								" where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS < " + Integer.parseInt(endDate) + " and DATE_OF_TRANS > " + 
-								Integer.parseInt(startDate) + " order by DATE_OF_TRANS desc";
+								" where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS < " + eDate + " and DATE_OF_TRANS > " + 
+								stDate + " order by DATE_OF_TRANS desc";
 					
 					st = connection.createStatement();
 					rs = st.executeQuery(sqlminist);
