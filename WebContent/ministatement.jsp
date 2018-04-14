@@ -78,7 +78,7 @@
 					Statement st = null;
 					ResultSet rs = null;
 					connection = DriverManager.getConnection(URL, username, password);
-					String sqlminist = "select t.* from (select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE from TRANSACTIONS where account_id = " + Integer.parseInt(user) + " order by DATE_OF_TRANS desc)t where ROWNUM <= 10";
+					String sqlminist = "select t.* from (select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE from TRANSACTIONS where account_id = " + Integer.parseInt(user) + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc)t where ROWNUM <= 10";
 					
 					st = connection.createStatement();
 					rs = st.executeQuery(sqlminist);

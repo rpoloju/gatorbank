@@ -151,7 +151,7 @@
 				<td align="right"><input onclick="displayResult('<%=noOfRecords%>')" type = "button" value = "Records" id = "recordsbutton"></input></td>
 			</tr>
 		</table>
-		<br/><br/><br/><br/><br/>
+		<br/><br/><br/><br/><br/><br/><br/>
 		<table border="0" align="center">
 			<tbody>
 				<tr>

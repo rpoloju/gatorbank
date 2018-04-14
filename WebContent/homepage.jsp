@@ -46,7 +46,7 @@
 				connection = DriverManager.getConnection(URL, username, password);
 				String balance = "select date_of_trans, balance from transactions where account_id = " + user
 						+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id ="
-						+ user + ")";
+						+ user + ") order by transaction_id desc";
 				st = connection.createStatement();
 				rs = st.executeQuery(balance);
 				if (rs.next()) {
@@ -76,6 +76,7 @@
 	<%} else { %>
 	<h3>No transactions for this account.</h3>
 	<%} %>
+	<br/><br/><br/>
 	<table border="0" align="center">
 		<tbody>
 			<tr>

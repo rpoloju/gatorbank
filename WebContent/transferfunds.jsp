@@ -80,7 +80,7 @@
 				connection = DriverManager.getConnection(URL, username, password);
 				String sqlBal = "select balance from transactions where account_id = " + user
 						+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id =" + user
-						+ ")";
+						+ ") order by transaction_id desc";
 				st = connection.createStatement();
 				rs = st.executeQuery(sqlBal);
 				if (rs.next()) {
@@ -93,6 +93,7 @@
 				e.printStackTrace();
 			}
 		%>
+		<br/><br/><br/><br/><br/><br/>
 		<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -108,14 +109,16 @@
 				<tr>
 					<td>Bank :</td>
 					<td><select name="bankTo">
+							<option>GatorBank</option>
 							<%
 								for (Map.Entry<String, String> entry : banks.entrySet()) {
 							%>
-							<option><%=entry.getKey() + "-" + entry.getValue()%></option>
+							<option><%=entry.getKey() + " - " + entry.getValue()%></option>
 
 							<%
 								}
 							%>
+							
 					</select></td>
 				</tr>
 				<tr>
