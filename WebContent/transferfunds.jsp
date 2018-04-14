@@ -4,9 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<style type="text/css">
+.myclass {
+	background-color: #aaa;
+	padding: 10px;
+}
+</style>
+<title>Transfer funds</title>
 </head>
 <body>
-
+	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+	
+	<table width="800px" border=0 align="center">
+		<tr>
+			<td align="right"><a href="homepage.jsp" style="color: #000000;">Account
+					Home</a></td>
+		</tr>
+	</table>
 </body>
 </html>
