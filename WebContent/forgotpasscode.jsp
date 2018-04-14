@@ -10,18 +10,23 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+.bgstyle {
+        background: url(Back2.jpg) no-repeat center center fixed;
+        background-size: cover;
+}
 </style>
 <title>Forgot passcode</title>
 </head>
-<body>
+<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
 	<form name="changepasscode" action="changepasscodepage.jsp" method="POST" onsubmit="return forgotpasscodecheck();">
-	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="index.jsp"
 				style="color: #000000;">Home</a></td>
 		</tr>
 	</table>
+	<br/><br/><br/><br/><br/><br/><br/>
 	<table border="0" align="center">
 			<tbody>
 				<tr>

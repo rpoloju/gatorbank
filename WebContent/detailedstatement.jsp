@@ -10,7 +10,6 @@
 	background-color: #aaa;
 	padding: 10px;
 }
-
 img {
 	display: block;
 	margin-left: auto;

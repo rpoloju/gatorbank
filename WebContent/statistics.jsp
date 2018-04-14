@@ -4,9 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+.bgstyle {
+        background: url(Back2.jpg) no-repeat center center fixed;
+        background-size: cover;
+}
+</style>
 <title>Insert title here</title>
 </head>
-<body>
+<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
 
 </body>
 </html>

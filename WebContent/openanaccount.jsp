@@ -13,20 +13,24 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+.bgstyle {
+        background: url(Back2.jpg) no-repeat center center fixed;
+        background-size: cover;
+}
 </style>
 <title>New Account page</title>
 </head>
 	
-<body>
+<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
 <form name="createaccount" action="redirectCreatePage.jsp" method="POST" onsubmit = "return validnew();">
-	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="index.jsp"
 				style="color: #000000;">Home</a></td>
 		</tr>
 	</table>
-	<h3>Your account id/user id will be automatically generated after validating your personal information</h3>
+	<br/><br/><br/><br/><br/><br/>
 	<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -91,7 +95,10 @@
 		</table>
 		<table border="0" align="center">
 			<tr>
-				<td><p>Please click on "Create" to get your account id(s)</p></td>
+				<td align="center"><p>Please click on "Create" to get your account id(s)</p></td>
+			</tr>
+			<tr>
+				<td align="center"><p>Your account id/user id will be automatically generated after validating your personal information</p></td>
 			</tr>
 		</table>
 </form>

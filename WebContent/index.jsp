@@ -12,6 +12,11 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
+.bgstyle {
+        background: url(Back2.jpg) no-repeat center center fixed;
+        background-size: cover;
+}
 </style>
 
 <style>
@@ -41,8 +46,8 @@
 <title>Welcome to GatorBank</title>
 
 </head>
-<body>
-	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<div class="tooltip" align="right">
 		About us <span class="tooltiptext"> GatorBank is an online
 			banking system that provides facilities to customers such as opening
@@ -146,6 +151,7 @@
 				<td align="right"><input onclick="displayResult('<%=noOfRecords%>')" type = "button" value = "Records" id = "recordsbutton"></input></td>
 			</tr>
 		</table>
+		<br/><br/><br/><br/><br/>
 		<table border="0" align="center">
 			<tbody>
 				<tr>

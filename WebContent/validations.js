@@ -191,3 +191,17 @@ function validstDates() {
 	}
 	return true;
 }
+
+function validTransfer() {
+	if (document.transferPage.transferto.value == "") {
+		alert("Please enter account id.");
+		document.transferPage.transferto.focus();
+		return false;
+	}
+	if (document.transferPage.transferAmount.value == "") {
+		alert("Please enter amount.");
+		document.transferPage.transferAmount.focus();
+		return false;
+	}
+	return true;
+}

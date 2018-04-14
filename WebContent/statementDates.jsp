@@ -10,11 +10,15 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+.bgstyle {
+        background: url(Back2.jpg) no-repeat center center fixed;
+        background-size: cover;
+}
 </style>
 <title>Detailed Statement</title>
 </head>
-<body>
-	<h1 class="myclass" align="center">Welcome to GatorBank</h1>
+<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<form name="statementDates" action="detailedstatement.jsp" method="POST"
 		onsubmit="return validstDates();">
 	<table width="800px" border=0 align="center">
@@ -30,6 +34,7 @@
 		user = session.getAttribute("userid").toString();
 	}
 	%>
+	<br/><br/><br/><br/><br/>
 	<table border="0" align="center">
 			<tbody>
 				<tr>
