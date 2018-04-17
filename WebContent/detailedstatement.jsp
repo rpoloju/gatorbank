@@ -171,7 +171,7 @@ img {
 				//Get transactions from transactions table
 				String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE from TRANSACTIONS "
 						+ " where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS <= " + eDate
-						+ " and DATE_OF_TRANS >= " + stDate + " order by DATE_OF_TRANS desc";
+						+ " and DATE_OF_TRANS >= " + stDate + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc";
 
 				rs = st.executeQuery(sqlminist);
 				while (rs.next()) {

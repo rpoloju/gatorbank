@@ -43,6 +43,31 @@
 	visibility: visible;
 }
 </style>
+
+<style>
+.tooltip1 {
+	position: relative;
+	display: inline-block;
+	border-bottom: 1px dotted black;
+}
+
+.tooltip1 .tooltiptext {
+	visibility: hidden;
+	width: 150px;
+	background-color: gray;
+	color: #ccc;
+	text-align: left;
+	border-radius: 10px;
+	padding: 10px 10px;
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip1:hover .tooltiptext {
+	visibility: visible;
+}
+</style>
 <title>Welcome to GatorBank</title>
 
 </head>
@@ -56,6 +81,9 @@
 			statements, enrolling to credit cards, viewing/changing account
 			information etc. The system also provides security to their accounts
 			with authentication facility. </span>
+	</div>
+	<div class="tooltip1" align="right">
+		Developers <span class="tooltiptext"> Ravi Teja Poloju	Anurag Gupta	Anushka Gupta	Deepak Sreenivasan </span>
 	</div>
 	<form name="welcomepage" action="redirectWelcomePage.jsp" method="POST"
 		onsubmit="return validLogin();">

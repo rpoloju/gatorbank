@@ -29,19 +29,13 @@
 	<br />
 
 	<%
-		int status1 = 0, status2 = 0;
-		if (session.getAttribute("status1") != null) {
-			status1 = Integer.parseInt(session.getAttribute("status1").toString());
+		int status = 0;
+		if (session.getAttribute("status") != null) {
+			status = Integer.parseInt(session.getAttribute("status").toString());
 		}
-		if (session.getAttribute("status2") != null) {
-			status1 = Integer.parseInt(session.getAttribute("status2").toString());
-		}
-		
-		System.out.println(status1);
-		System.out.println(status2);
 	%>
 
-	<%if (status1 > 0 && status2 > 0) { %>
+	<%if (status > 0) { %>
 	<h3 align="center">Transfer Successful. Press on the home button to continue.</h3>
 	<%} else { %>
 	<h3 align="center">Transfer Failed. Press on the home button to continue.</h3>

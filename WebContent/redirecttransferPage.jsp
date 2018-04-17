@@ -92,50 +92,72 @@
 				String sqlOrder = "insert into orders values((select max(order_id) from orders) + 1, " + user + ",'"
 						+ toBank + "'," + toAccount + "," + transferAmount + ")";
 				int order1 = st.executeUpdate(sqlOrder);
-				System.out.println(sqlOrder);
 
 				//Inserting into transactions table
 				String sqltrans = "insert into transactions values((select max(transaction_id) from transactions)+1, "
 						+ user + "," + dateOftrans + ",'VYDAJ', 'PREVOD NA UCET'," + transferAmount + ","
 						+ (checkBalance - transferAmount) + "," + toAccount + ",'" + toBank + "')";
 				int trans = st.executeUpdate(sqltrans);
-				System.out.println(sqltrans);
-				
-				session.setAttribute("status1", order1);
-				session.setAttribute("status2", trans);
-				String redirectURL = "transferstatus.jsp";
-				response.sendRedirect(redirectURL); 
+
+				//Inserting into Creates table
+				String sqlCreates1 = "insert into creates values(" + user + ","
+						+ "(select max(order_id) from orders),-1)";
+				int creates1 = st.executeUpdate(sqlCreates1);
+
+				String sqlCreates2 = "insert into creates values(" + user
+						+ ",-1,(select max(transaction_id) from transactions))";
+				int creates2 = st.executeUpdate(sqlCreates2);
+
+				if (order1 > 0 && trans > 0 && creates1 > 0 && creates2 > 0) {
+					int status = 1;
+					connection.commit();
+					session.setAttribute("status", status);
+					String redirectURL = "transferstatus.jsp";
+					response.sendRedirect(redirectURL);
+				}
 
 			} else if (checkBalance >= transferAmount && toBank.trim().toUpperCase().equals("GATORBANK")) {
 				//Initially get the balance of the target account
 				String sqltargetbal = "select balance from transactions where account_id = " + toAccount
-					+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id =" + toAccount
-					+ ")";
+						+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id ="
+						+ toAccount + ")";
 				rs = st.executeQuery(sqltargetbal);
 				if (rs.next()) {
 					targetBalance = rs.getFloat(1);
 				}
-			
+
 				//Case 2: If this is an intra bank transfer, update transactions table with 2 rows
+				//Inserting into transactions table - sender record
 				String sqltrans1 = "insert into transactions values((select max(transaction_id) from transactions)+1, "
 						+ user + "," + dateOftrans + ",'VYDAJ', 'VYBER'," + transferAmount + ","
 						+ (checkBalance - transferAmount) + ",-1,'-1')";
 				int trans1 = st.executeUpdate(sqltrans1);
-				System.out.println(sqltrans1);
 
+				//Inserting into creates table				
+				String sqlCreates1 = "insert into creates values(" + user
+						+ ",-1,(select max(transaction_id) from transactions))";
+				int creates1 = st.executeUpdate(sqlCreates1);
+
+				//Inserting into transactions table - receiver record
 				String sqltrans2 = "insert into transactions values((select max(transaction_id) from transactions)+1, "
 						+ toAccount + "," + dateOftrans + ",'PRIJEM', 'VKLAD'," + transferAmount + ","
 						+ (targetBalance + transferAmount) + ",-1,'-1')";
 				int trans2 = st.executeUpdate(sqltrans2);
-				System.out.println(sqltrans2);
-				
-				session.setAttribute("status1", trans1);
-				session.setAttribute("status2", trans2);
-				String redirectURL = "transferstatus.jsp";
-				response.sendRedirect(redirectURL); 
+
+				//Inserting into creates table
+				String sqlCreates2 = "insert into creates values(" + user
+						+ ",-1,(select max(transaction_id) from transactions))";
+				int creates2 = st.executeUpdate(sqlCreates2);
+
+				if (trans1 > 0 && trans2 > 0 && creates1 > 0 && creates2 > 0) {
+					int status = 1;
+					connection.commit();
+					session.setAttribute("status", status);
+					String redirectURL = "transferstatus.jsp";
+					response.sendRedirect(redirectURL);
+				}
 			}
-			
-			
+
 			if (connection != null)
 				connection.close();
 		} catch (Exception e) {
