@@ -23,6 +23,7 @@
 
 	<%
 		try {
+			boolean userExists = false;
 			Class.forName("oracle.jdbc.OracleDriver");
 
 			String usernameFromForm = request.getParameter("onlineid");
@@ -40,11 +41,12 @@
 			st = connection.prepareStatement(sqlUserNamePassword);
 			st.setString(1, usernameFromForm);
 			rs = st.executeQuery();
-			Integer usernameFromDB = null;
-			String passcodeFromDB = null;
+			int usernameFromDB = 0;
+			String passcodeFromDB = "";
 			if (rs.next()) {
 				usernameFromDB = rs.getInt(1);
 				passcodeFromDB = rs.getString(2);
+				userExists = true;
 			}
 			if (usernameFromDB == Integer.parseInt(usernameFromForm) && passcodeFromDB.equals(passcodeFromForm)) {
 				session.setAttribute("userid", usernameFromForm);

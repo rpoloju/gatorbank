@@ -42,8 +42,8 @@
 	<h3>Transaction Failed. The reason could be one of the following.</h3>
 	<ul >
   		<li>User id might not exist.</li>
-  		<li>Database connectivity failure.</li>
-  		<li>Invalid input.</li>
+  		<li>Insufficient Balance.</li>
+  		<li>System temporarily down for maintenance.</li>
 	</ul>
 	<%} %>
 </body>

@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="validations.js" type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
 .myclass {
@@ -17,7 +18,7 @@
 <title>Admin Login page</title>
 </head>
 <body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
-	<form name="adminloginpage" action="adminLoginPage.jsp" method="POST" onsubmit = "return validLogin();">
+	<form name="adminloginpage" action="adminCheckPage.jsp" method="POST" onsubmit = "return validAdminLogin();">
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<table width="800px" border=0 align="center">
 		<tr>
@@ -34,7 +35,7 @@
 				</tr>
 				<tr>
 					<td>PassCode :</td>
-					<td><input type="password" name="passcode" value="" size="20"></td>
+					<td><input type="password" name="adminpasscode" value="" size="20"></td>
 					<td><input type="submit" value="Sign in" name="signin"></td>
 					<td><input type="reset" value="Cancel" name="clear"></td>
 				</tr>

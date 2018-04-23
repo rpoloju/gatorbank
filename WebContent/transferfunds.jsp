@@ -65,7 +65,7 @@
 			banks.put("ST", "State Street");
 			banks.put("GH", "SunTrust Banks");
 			banks.put("AB", "HSBC USA");
-			String bal = "";
+			String bal = "0.0";
 			try {
 				Class.forName("oracle.jdbc.OracleDriver");
 

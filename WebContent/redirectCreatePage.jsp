@@ -100,35 +100,35 @@
 			
 			//Inserting client id to client table
 			String sqlInsertClient = "INSERT INTO CLIENT VALUES (" + newClientId + "," + dateOfBirth + ")";
-			//st.executeUpdate(sqlInsertClient);
+			st.executeUpdate(sqlInsertClient);
 			System.out.println("Done CLIENT" + newClientId);
 
 			//Inserting owner account id to account table
 			String sqlInsertAccount1 = "INSERT INTO ACCOUNT VALUES (" + newAccountId + "," + districtId + ","
 					+ dateOfJoining + ")";
-			//st.executeUpdate(sqlInsertAccount1);
+			st.executeUpdate(sqlInsertAccount1);
 			System.out.println("Done Account1");
 
 			//Inserting userid of owner to user table
 			String sqlInsertUsers1 = "INSERT INTO USERS VALUES (" + newAccountId + "," + "'" + passcodeFromForm
 					+ "'" + "," + newAccountId + ")";
-			//st.executeUpdate(sqlInsertUsers1);
+			st.executeUpdate(sqlInsertUsers1);
 			System.out.println("Done Users1");
 
 			//Inserting owner details to disposition table
 			String sqlInsertDisponent1 = "INSERT INTO DISPOSITION VALUES (" + newDispId + "," + newAccountId + ","
 					+ newClientId + "," + "'OWNER')";
-			//st.executeUpdate(sqlInsertDisponent1);
+			st.executeUpdate(sqlInsertDisponent1);
 			System.out.println("Done disponent1");
 
 			//Inserting owner details to login_to table
 			String sqlInsertloginto1 = "INSERT INTO LOGIN_TO VALUES (" + newAccountId + "," + newAccountId + ")";
-			//st.executeUpdate(sqlInsertloginto1);
+			st.executeUpdate(sqlInsertloginto1);
 			System.out.println("Done loginto1");
 
 			//Inserting owner details to opened_at table
 			String sqlInsertopenedat1 = "INSERT INTO OPENED_AT VALUES (" + newAccountId + "," + districtId + ")";
-			//st.executeUpdate(sqlInsertopenedat1);
+			st.executeUpdate(sqlInsertopenedat1);
 			System.out.println("Done openedat1");
 
 			//If disponent is selected
@@ -136,32 +136,32 @@
 				//Inserting desponent account id to account table
 				String sqlInsertAccount2 = "INSERT INTO ACCOUNT VALUES (" + newAccountIdDisp + "," + districtId
 						+ "," + dateOfJoining + ")";
-				//st.executeUpdate(sqlInsertAccount2);
+				st.executeUpdate(sqlInsertAccount2);
 				System.out.println("Done account2");
 
 				//Inserting user id of disponent to user table
 				String dispPasscode = Integer.toString(newAccountIdDisp);
 				String sqlInsertUsers2 = "INSERT INTO USERS VALUES (" + newAccountIdDisp + "," + "'" + dispPasscode
 						+ "'" + "," + newAccountIdDisp + ")";
-				//st.executeUpdate(sqlInsertUsers2);
+				st.executeUpdate(sqlInsertUsers2);
 				System.out.println("Done users2");
 
 				//Inserting disponent details to disposition table
 				String sqlInsertDisponent2 = "INSERT INTO DISPOSITION VALUES (" + newDispId + "," + newAccountIdDisp
 						+ "," + newClientId + "," + "'DISPONENT')";
-				//st.executeUpdate(sqlInsertDisponent2);
+				st.executeUpdate(sqlInsertDisponent2);
 				System.out.println("Done disp2");
 
 				//Inserting disponent details to login_to table
 				String sqlInsertloginto2 = "INSERT INTO LOGIN_TO VALUES (" + newAccountIdDisp + ","
 						+ newAccountIdDisp + ")";
-				//st.executeUpdate(sqlInsertloginto2);
+				st.executeUpdate(sqlInsertloginto2);
 				System.out.println("Done loginto2");
 
 				//Inserting disponent details to opened_at table
 				String sqlInsertopenedat2 = "INSERT INTO OPENED_AT VALUES (" + newAccountIdDisp + "," + districtId
 						+ ")";
-				//st.executeUpdate(sqlInsertopenedat2);
+				st.executeUpdate(sqlInsertopenedat2);
 				System.out.println("Done openedat2");
 			}
 

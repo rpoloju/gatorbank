@@ -17,6 +17,21 @@ function validLogin() {
 	return true;
 }
 
+function validAdminLogin() {
+
+	if (document.adminloginpage.adminid.value == "") {
+		alert("Please enter Login id.");
+		document.adminloginpage.adminid.focus();
+		return false;
+	}
+	if (document.adminloginpage.passcode.value == "") {
+		alert("Please enter passcode.");
+		document.adminloginpage.passcode.focus();
+		return false;
+	}
+	return true;
+}
+
 function forgotpasscodecheck() {
 	if (document.changepasscode.onlineid.value == "") {
 		alert("Please enter a valid online id");
