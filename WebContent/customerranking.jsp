@@ -1,6 +1,6 @@
 <%@ page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,12 +11,10 @@
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Over draft accounts</title>
+<title>Customer Ranking</title>
 </head>
-<body>
 <body class="bgstyle"
 	background="${pageContext.request.contextPath}//Back2.jpg">
-
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="adminwall.jsp"
@@ -28,8 +26,8 @@
 	<br />
 	<br />
 	<br />
-	<h3 align="center">Accounts with current balance less than 300</h3>
-
+	<h3 align="center">Customer Ranking based on banking activity</h3>
+	
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">
 		<tr>
@@ -40,18 +38,18 @@
 					<a><b>Account ID</b></a>
 				</div></td>
 			<td width="90"><div align="center">
-					<a><b>Last date of Trans</b></a>
+					<a><b>District</b></a>
 				</div></td>
-			<td width="20"><div align="center">
-					<a><b>Balance</b></a>
+			<td width="15"><div align="center">
+					<a><b>Transactions</b></a>
 				</div></td>
 		</tr>
 
 		<%
 			int rownum = 1;
 				int accountid = 0;
-				int transDate = 0;
-				float balance = 0;
+				int transcount = 0;
+				String dist = "";
 				try {
 					Class.forName("oracle.jdbc.OracleDriver");
 
@@ -63,24 +61,24 @@
 					Statement st = null;
 					ResultSet rs = null;
 					connection = DriverManager.getConnection(URL, username, password);
-					String sqloverdraft = "SELECT t1.account_id, t1.DATE_OF_TRANS, t1.BALANCE "
-							+ "FROM transactions t1 " + "LEFT OUTER JOIN transactions t2 "
-							+ "ON (t1.account_id = t2.account_id AND t1.transaction_id < t2.transaction_id) "
-							+ "WHERE t2.account_id IS NULL and t1.balance < 300 order by t1.account_id desc";
+					
+					String sqlrank = "select t1.*, t2.district_name from ( " + " select t.* from ( "
+						+ " select account_id, count(*) as \"countoftrans\" from transactions where account_id in ( "
+						+ " select distinct account_id from transactions) " + " group by account_id)t "
+						+ " order by t.\"countoftrans\" desc )t1, "
+						+ " (select d.district_name, acc.account_id from district d join account acc on acc.district_id = d.district_id)t2 "
+						+ "where t2.account_id = t1.account_id and rownum < 11";
 
-					st = connection.createStatement();
-					rs = st.executeQuery(sqloverdraft);
-					while (rs.next()) {
-						accountid = rs.getInt(1);
+				st = connection.createStatement();
+				rs = st.executeQuery(sqlrank);
+				while (rs.next()) {
+					accountid = rs.getInt(1);
 
-						//Get transaction date in the required format
-						transDate = rs.getInt(2);
-						String tDate = Integer.toString(transDate);
-						tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
+					transcount = rs.getInt(2);
 
-						balance = rs.getFloat(3);
+					dist = rs.getString(3);
 
-						//Display the values in table
+					//Display the values in table
 		%>
 
 		<tr>
@@ -91,10 +89,10 @@
 					<a><%=accountid%></a>
 				</div></td>
 			<td width="90"><div align="center">
-					<a><%=tDate%></a>
+					<a><%=dist%></a>
 				</div></td>
-			<td width="20"><div align="right">
-					<a><%=balance%></a>
+			<td width="15"><div align="center">
+					<a><%=transcount%></a>
 				</div></td>
 		</tr>
 
@@ -105,12 +103,10 @@
 					if (connection != null)
 						connection.close();
 				} catch (Exception e) {
-					out.println("Unable to fetch over draft records");
+					out.println("Unable to fetch ranking records");
 					e.printStackTrace();
 				}
 		%>
 	</table>
-
-
 </body>
 </html>
