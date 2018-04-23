@@ -94,7 +94,7 @@
 			
 			
 
-			JFreeChart chart = ChartFactory.createPieChart("Transactions by month - 1988", pieDataset, true, true,
+			JFreeChart chart = ChartFactory.createPieChart("Transactions by month - 1998", pieDataset, true, true,
 					false);
 			//chart.setBackgroundPaint(new Color(0xFF, 0xFF, 0xFF, 0));
 			final PiePlot plot = (PiePlot) chart.getPlot();

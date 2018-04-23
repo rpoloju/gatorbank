@@ -36,9 +36,15 @@
 	%>
 
 	<%if (status > 0) { %>
-	<h3 align="center">Transfer Successful. Press on the home button to continue.</h3>
+	<h3 align="center">Transaction Successful. Press on the home button to continue.</h3>
+	<h3 align="center">Transaction id: <%=session.getAttribute("tid") %></h3>
 	<%} else { %>
-	<h3 align="center">Transfer Failed. Press on the home button to continue.</h3>
+	<h3>Transaction Failed. The reason could be one of the following.</h3>
+	<ul >
+  		<li>User id might not exist.</li>
+  		<li>Database connectivity failure.</li>
+  		<li>Invalid input.</li>
+	</ul>
 	<%} %>
 </body>
 </html>

@@ -91,7 +91,7 @@
 					<a href="ministatement.jsp">Mini Statement</a>
 				</div></td>
 			<td><div align="center">
-					<a href="statementDates.jsp">Detailed Statement</a>
+					<a href="statementDatesPage.jsp">Detailed Statement</a>
 				</div></td>
 			<td><div align="center">
 					<a href="transferfunds.jsp">Transfer funds</a>

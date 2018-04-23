@@ -165,6 +165,7 @@
 				}
 				
 				noOfRecords = recordsInCurrentTable;
+				
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
@@ -184,7 +185,7 @@
 			<tbody>
 				<tr>
 					<td>Online id :</td>
-					<td><input type="text" name="onlineid" value="" size="20"></td>
+					<td><input type="text" name="onlineid" value="" size="20" ></td>
 				</tr>
 				<tr>
 					<td>PassCode :</td>

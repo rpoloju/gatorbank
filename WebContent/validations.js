@@ -18,11 +18,60 @@ function validLogin() {
 }
 
 function forgotpasscodecheck() {
-
+	if (document.changepasscode.onlineid.value == "") {
+		alert("Please enter a valid online id");
+		document.changepasscode.onlineid.focus();
+		return false;
+	}
+	
 	if (document.changepasscode.passcode1.value == "") {
 		alert("Please enter a valid passcode");
 		document.changepasscode.passcode1.focus();
 		return false;
+	}
+	
+	var dateofbirth = document.changepasscode.dob.value;
+	if (dateofbirth.length != 8) {
+		alert("Invalid Date of Birth");
+		document.createaccount.dob.focus();
+		return false;
+	}
+	var month = parseInt(dateofbirth.substring(0, 2));
+	var day = parseInt(dateofbirth.substring(2, 4));
+	var year = parseInt(dateofbirth.substring(4, 8));
+
+	if (month > 12 || month < 1) {
+		alert("Invalid Month");
+		document.changepasscode.dob.focus();
+		return false;
+	}
+
+	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8
+			|| month == 10 || month == 12) {
+		if (parseInt(dateofbirth.substring(2, 4)) > 31
+				|| parseInt(dateofbirth.substring(2, 4)) < 1) {
+			alert("Invalid date");
+			document.changepasscode.dob.focus();
+			return false;
+		}
+	}
+
+	if (month == 4 || month == 6 || month == 9 || month == 11) {
+		if (parseInt(dateofbirth.substring(2, 4)) > 30
+				|| parseInt(dateofbirth.substring(2, 4)) < 1) {
+			alert("Invalid date");
+			document.changepasscode.dob.focus();
+			return false;
+		}
+	}
+
+	if (month == 2) {
+		if (parseInt(dateofbirth.substring(2, 4)) > 28
+				|| parseInt(dateofbirth.substring(2, 4)) < 1) {
+			alert("Invalid date");
+			document.changepasscode.dob.focus();
+			return false;
+		}
 	}
 	return true;
 }
@@ -100,9 +149,8 @@ function validnew() {
 }
 
 function validstDates() {
+	
 	var stDate = document.statementDates.startDate.value;
-	document.write(startDate);
-	document.write(startDate.length);
 	if (stDate.length != 8) {
 		alert("Invalid start date");
 		document.statementDates.startDate.focus();
@@ -148,7 +196,7 @@ function validstDates() {
 
 	var eDate = document.statementDates.endDate.value;
 	if (eDate.length != 8) {
-		alert("Invalid start date");
+		alert("Invalid end date");
 		document.statementDates.endDate.focus();
 		return false;
 	}
@@ -200,6 +248,11 @@ function validTransfer() {
 	}
 	if (document.transferPage.transferAmount.value == "") {
 		alert("Please enter amount.");
+		document.transferPage.transferAmount.focus();
+		return false;
+	}
+	if (parseFloat(document.transferPage.transferAmount.value) <= 0) {
+		alert("Please enter amount greater than 0");
 		document.transferPage.transferAmount.focus();
 		return false;
 	}

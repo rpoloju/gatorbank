@@ -34,6 +34,10 @@
 					<td><input type="text" name="onlineid" value="" size="20"></td>
 				</tr>
 				<tr>
+					<td>Date of Birth :</td>
+					<td><input type="text" name="dob" value="" size="20"></td>
+				</tr>
+				<tr>
 					<td>New PassCode :</td>
 					<td><input type="password" name="passcode1" value="" size="20"></td>
 				</tr>

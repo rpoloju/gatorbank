@@ -33,6 +33,11 @@
 
 		String usernameFromForm = request.getParameter("onlineid");
 		String passcodeFromForm = request.getParameter("passcode1");
+		String dobFromForm = request.getParameter("dob");
+		int success = 0;
+		int dobtocheck = 0;
+		boolean toBeProcessed = false;
+		
 		String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
 		String username = "rpoloju";
 		String password = "cop5725#";
@@ -42,25 +47,45 @@
 		ResultSet rs = null;
 
 		connection = DriverManager.getConnection(URL, username, password);
-		String sqlUserNamePassword = "select * from USERS WHERE USER_ID = " + usernameFromForm;
 		st = connection.createStatement();
-		rs = st.executeQuery(sqlUserNamePassword);
+		
+		String userSearch = "select dob from client c join disposition d on c.CLIENT_ID = d.CLIENT_ID and d.ACCOUNT_ID = " + usernameFromForm;
+		rs = st.executeQuery(userSearch);
 		if (rs.next()) {
-			String updatePasscode = "UPDATE USERS SET PASSCODE = " + passcodeFromForm + "WHERE USER_ID = " + usernameFromForm;
-			int success = st.executeUpdate(updatePasscode);
-			connection.commit();
-			if (success > 0) {
-				%>
-				
-				<input type = "hidden" name = "hidden" value = "<%=success %>"/>
-				
-				<%
+			//dobFromdb contains date of format yyyymmdd
+			int dobFromdb = rs.getInt(1);
+			//If female, month is mm + 50, so adjusting accordingly
+			if (dobFromdb % 10000 > 1231) {
+				dobFromdb -= 5000;
 			}
-		} else {
-			response.sendRedirect("forgotpasscode.jsp");
+			
+			//Converting the string to mmddyyyy to compare it against form value
+			String dobFromdbSt = Integer.toString(dobFromdb);
+			dobFromdbSt = dobFromdbSt.substring(4, 6) + "" + dobFromdbSt.substring(6, 8) + ""
+					+ dobFromdbSt.substring(0, 4);
+			dobFromdb = Integer.parseInt(dobFromdbSt);
+			
+			//This is dob from form which is already in mmddyyyy format
+			dobtocheck = Integer.parseInt(dobFromForm);
+			
+			if (dobtocheck == dobFromdb) {
+				toBeProcessed = true;
+			}
+		}
+		
+		if (toBeProcessed) {
+			String updatePasscode = "UPDATE USERS SET PASSCODE = " + passcodeFromForm + "WHERE USER_ID = " + usernameFromForm;
+			success = st.executeUpdate(updatePasscode);
+			connection.commit();
+			%>
+			
+			<input type = "hidden" name = "hidden" value = "<%=success %>"/>
+			
+			<%
 		}
 		if (connection != null)
 			connection.close();
+		
 	} catch (Exception e) {
 		out.println("Update passcode failed");
 		e.printStackTrace();

@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body class="bgstyle"
-	background="${pageContext.request.contextPath}//Back2.jpg">
+	background="${pageContext.request.contextPath}//Back2.jpg" >
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="homepage.jsp" style="color: #000000;">Account
@@ -39,6 +39,7 @@
 		float transferAmount = 0;
 		String toBank = "";
 		int newOrderId = 0;
+		boolean doesUserExist = false;
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 
@@ -77,16 +78,27 @@
 				newOrderId = Integer.parseInt(rs.getString(1)) + 1;
 			}
 
-			//Get balance available to validate against transfer amount
-			String sqlBal = "select balance from transactions where account_id = " + user
-					+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id =" + user
-					+ ") order by transaction_id desc";
-			rs = st.executeQuery(sqlBal);
+			//Check if the account id of the payee exists
+			String checkuser = "select * from account where account_id = " + toAccount;
+			rs = st.executeQuery(checkuser);
 			if (rs.next()) {
-				checkBalance = rs.getFloat(1);
+				doesUserExist = true;
 			}
 
-			if (checkBalance >= transferAmount && !toBank.trim().toUpperCase().equals("GATORBANK")) {
+			//Get balance available to validate against transfer amount if the user exists
+			if (doesUserExist) {
+				String sqlBal = "select balance from transactions where account_id = " + user
+						+ "and date_of_trans = (select max(date_of_trans) from transactions where account_id ="
+						+ user + ") order by transaction_id desc";
+				rs = st.executeQuery(sqlBal);
+				if (rs.next()) {
+					checkBalance = rs.getFloat(1);
+				}
+			}
+			rs = null;
+
+			if (checkBalance >= transferAmount && !toBank.trim().toUpperCase().equals("GATORBANK")
+					&& doesUserExist) {
 				//Case 1: if this is an interbank transfer, update Orders and Tranactions tables
 				//Inserting into order table
 				String sqlOrder = "insert into orders values((select max(order_id) from orders) + 1, " + user + ",'"
@@ -108,9 +120,18 @@
 						+ ",-1,(select max(transaction_id) from transactions))";
 				int creates2 = st.executeUpdate(sqlCreates2);
 
+				//Get the transaction id from the transaction table
+				int tid = 0;
+				String sqltid = "select max(transaction_id) from transactions";
+				rs = st.executeQuery(sqltid);
+				if (rs.next()) {
+					tid = rs.getInt(1);
+				}
+
 				if (order1 > 0 && trans > 0 && creates1 > 0 && creates2 > 0) {
 					int status = 1;
 					connection.commit();
+					session.setAttribute("tid", tid);
 					session.setAttribute("status", status);
 					String redirectURL = "transferstatus.jsp";
 					response.sendRedirect(redirectURL);
@@ -149,13 +170,27 @@
 						+ ",-1,(select max(transaction_id) from transactions))";
 				int creates2 = st.executeUpdate(sqlCreates2);
 
+				//Get the transaction id from the transaction table
+				int tid = 0;
+				String sqltid = "select max(transaction_id) from transactions";
+				rs = st.executeQuery(sqltid);
+				if (rs.next()) {
+					tid = rs.getInt(1) - 1;
+				}
+
 				if (trans1 > 0 && trans2 > 0 && creates1 > 0 && creates2 > 0) {
 					int status = 1;
 					connection.commit();
+					session.setAttribute("tid", tid);
 					session.setAttribute("status", status);
 					String redirectURL = "transferstatus.jsp";
 					response.sendRedirect(redirectURL);
 				}
+			} else {
+				session.setAttribute("tid", 0);
+				session.setAttribute("status", 0);
+				String redirectURL = "transferstatus.jsp";
+				response.sendRedirect(redirectURL);
 			}
 
 			if (connection != null)

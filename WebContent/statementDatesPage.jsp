@@ -19,8 +19,8 @@
 </head>
 <body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
-	<form name="statementDates" action="detailedstatement.jsp" method="POST"
-		onsubmit="return validstDates();">
+	<form name="statementDates" action="detailedstatement.jsp" 
+	method="POST" onsubmit="return validstDates();">
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="homepage.jsp" style="color: #000000;">Account
