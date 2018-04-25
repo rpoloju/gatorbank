@@ -23,7 +23,7 @@ img {
 				style="color: #000000;">Admin Home</a></td>
 		</tr>
 	</table>
-	<h3 align="center">Customer Ranking based on banking activity</h3>
+	<h3 align="center">|-------------------| Customer Ranking based on banking activity |-------------------|</h3>
 	
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">
@@ -106,7 +106,7 @@ img {
 	
 	
 	<br/><br/><br/>
-	<h3 align="center"> Customer ranking based on account balance</h3>
+	<h3 align="center">|-------------------| Customer ranking based on account balance |-------------------|</h3>
 	
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">

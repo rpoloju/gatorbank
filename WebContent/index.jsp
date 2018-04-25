@@ -229,8 +229,8 @@
 		<marquee style="background-color:silver;">Gator Bank launches America's first digital
 			application form for opening current accounts; enables account
 			opening in a few seconds.<span class="tab"><span class="tab">Gator Bank pioneers the transformation of
-			crossborder payments in the United States.</span></span><span class="tab"><span class="tab">Gator Bank enables its
-			customers to send money through social media on its GatorBanking app.</span></span>
+			cross border payments in the United States.</span></span><span class="tab"><span class="tab">Gator Bank enables its
+			customers to send money through GatorBanking app.</span></span>
 		</marquee>
 	</form>
 </body>

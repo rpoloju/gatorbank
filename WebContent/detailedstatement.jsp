@@ -1,4 +1,6 @@
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,9 +40,11 @@ img {
 	<br />
 
 	<%
+		Map<String, String> banks = new HashMap<>();
 		String user = "";
 		String startDate = "";
 		String endDate = "";
+		String bank_id = "";
 		if (session.getAttribute("userid") != null) {
 			user = session.getAttribute("userid").toString();
 			startDate = request.getParameter("startDate").toString();
@@ -56,6 +60,21 @@ img {
 			float balance = 0;
 			int rownum = 1;
 			float accountBalance = 0;
+			
+			banks.put("MN", "JPMorgan Chase");
+			banks.put("UV", "Bank of America");
+			banks.put("OP", "Wells Fargo");
+			banks.put("YZ", "Citi");
+			banks.put("CD", "Goldman Sachs");
+			banks.put("KL", "Morgan Stanley");
+			banks.put("IJ", "U.S. Bancorp");
+			banks.put("WX", "PNC Financial Services");
+			banks.put("EF", "Bank of New York Mellon");
+			banks.put("QR", "Capital One");
+			banks.put("ST", "State Street");
+			banks.put("GH", "SunTrust Banks");
+			banks.put("AB", "HSBC USA");
+			
 			try {
 				Class.forName("oracle.jdbc.OracleDriver");
 
@@ -95,6 +114,8 @@ img {
 					dateOfB = rs.getString(1);
 					dateOfB = dateOfB.substring(4, 6) + "-" + dateOfB.substring(6, 8) + "-"
 							+ dateOfB.substring(0, 4);
+					if (dateOfB.charAt(0) == '5') dateOfB = "0" + dateOfB.substring(1);
+					if (dateOfB.charAt(0) == '6') dateOfB = "1" + dateOfB.substring(1);
 				}
 
 				//Get district from account table
@@ -169,7 +190,7 @@ img {
 
 		<%
 				//Get transactions from transactions table
-				String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE from TRANSACTIONS "
+				String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE, BANK_ID from TRANSACTIONS "
 						+ " where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS <= " + eDate
 						+ " and DATE_OF_TRANS >= " + stDate + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc";
 
@@ -182,23 +203,6 @@ img {
 					String tDate = Integer.toString(transDate);
 					tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
 
-					//Resolve Operation
-					operation = rs.getString(3);
-					String op = "";
-					if (operation == null) {
-						op = "Interest Credited";
-					} else if (operation.trim().toUpperCase().equals("VYBER KARTOU")) {
-						op = "Credit Card Withdrawal";
-					} else if (operation.trim().toUpperCase().equals("VKLAD")) {
-						op = "Credit in Cash";
-					} else if (operation.trim().toUpperCase().equals("PREVOD Z UCTU")) {
-						op = "Collected from another bank";
-					} else if (operation.trim().toUpperCase().equals("VYBER")) {
-						op = "Withdrawal in Cash";
-					} else {
-						op = "Remittance to another bank";
-					}
-
 					//Resolve the type
 					type = rs.getString(4);
 					String transType = "";
@@ -210,7 +214,24 @@ img {
 
 					amount = rs.getFloat(5);
 					balance = rs.getFloat(6);
-
+					bank_id = rs.getString(7);
+					
+					//Resolve Operation
+					operation = rs.getString(3);
+					String op = "";
+					if (operation == null) {
+						op = "Interest Credited";
+					} else if (operation.trim().toUpperCase().equals("VYBER KARTOU")) {
+						op = "Credit Card Withdrawal";
+					} else if (operation.trim().toUpperCase().equals("VKLAD")) {
+						op = "Credit in Cash / Transfer within GatorBank";
+					} else if (operation.trim().toUpperCase().equals("PREVOD Z UCTU")) {
+						op = "Collected from another bank - " + banks.get(bank_id);
+					} else if (operation.trim().toUpperCase().equals("VYBER")) {
+						op = "Withdrawal in Cash / Transfer within GatorBank";
+					} else {
+						op = "Remittance to another bank - " + banks.get(bank_id);
+					}
 					//Display the values in table
 	%>
 
@@ -224,7 +245,7 @@ img {
 			<td width="90"><div align="center">
 					<a><%=tDate%></a>
 				</div></td>
-			<td width="200"><div align="left">
+			<td width="320"><div align="left">
 					<a><%=op%></a>
 				</div></td>
 			<td width="50"><div align="center">
