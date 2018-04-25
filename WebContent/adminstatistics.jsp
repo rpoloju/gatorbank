@@ -159,7 +159,7 @@
 			pieDataset3.setValue("Nov", new Integer(trans[10]));
 			pieDataset3.setValue("Dec", new Integer(trans[11]));
 			
-			JFreeChart chart3 = ChartFactory.createPieChart("Transaction by month in the last fin. year", pieDataset3, false, true,
+			JFreeChart chart3 = ChartFactory.createPieChart("Transactions by month in the last fin. year", pieDataset3, false, true,
 					false);
 			//chart.setBackgroundPaint(new Color(0xFF, 0xFF, 0xFF, 0));
 			final PiePlot plot3 = (PiePlot) chart3.getPlot();

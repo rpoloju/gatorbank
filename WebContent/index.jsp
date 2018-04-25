@@ -12,18 +12,22 @@
 	background-color: #aaa;
 	padding: 10px;
 }
-
+.tab { 
+       display:inline-block; 
+       margin-left: 40px; 
+}
 .bgstyle {
-        background: url(Back2.jpg) no-repeat center center fixed;
-        background-size: cover;
+	background: url(Back2.jpg) no-repeat center center fixed;
+	background-size: cover;
 }
 </style>
 
 <style>
 .tooltip {
+	padding-left: 20px;
 	position: relative;
 	display: inline-block;
-	border-bottom: 1px dotted black;
+	/* border-bottom: 1px dotted black; */
 }
 
 .tooltip .tooltiptext {
@@ -46,9 +50,10 @@
 
 <style>
 .tooltip1 {
+	padding-left: 20px;
 	position: relative;
 	display: inline-block;
-	border-bottom: 1px dotted black;
+	/* border-bottom: 1px dotted black; */
 }
 
 .tooltip1 .tooltiptext {
@@ -71,19 +76,21 @@
 <title>Welcome to GatorBank</title>
 
 </head>
-<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+<body class="bgstyle"
+	background="${pageContext.request.contextPath}//Back2.jpg">
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<div class="tooltip" align="right">
-		About us <span class="tooltiptext"> GatorBank is an online
-			banking system that provides facilities to customers such as opening
-			an account, making transactions such as depositing funds, withdrawal,
-			transferring funds to a different account, generating account
-			statements, enrolling to credit cards, viewing/changing account
-			information etc. The system also provides security to their accounts
-			with authentication facility. </span>
+		<u> About GatorBank </u><span class="tooltiptext"> GatorBank is
+			an online banking system that provides facilities to customers such
+			as opening an account, making transactions such as depositing funds,
+			withdrawal, transferring funds to a different account, generating
+			account statements, enrolling to credit cards, viewing/changing
+			account information etc. The system also provides security to their
+			accounts with authentication facility. </span>
 	</div>
 	<div class="tooltip1" align="right">
-		Developers <span class="tooltiptext"> Ravi Teja Poloju	Anurag Gupta	Anushka Gupta	Deepak Sreenivasan </span>
+		<u> Developers </u><span class="tooltiptext"> Ravi Teja Poloju
+			Anurag Gupta Anushka Gupta Deepak Sreenivasan </span>
 	</div>
 	<form name="welcomepage" action="redirectWelcomePage.jsp" method="POST"
 		onsubmit="return validLogin();">
@@ -118,54 +125,54 @@
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql2);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql3);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql4);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql5);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql6);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql7);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql8);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql9);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				rs = st.executeQuery(sql10);
 				if (rs.next()) {
 					recordsInCurrentTable += rs.getInt(1);
 				}
-				
+
 				noOfRecords = recordsInCurrentTable;
-				
+
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
@@ -177,15 +184,23 @@
 
 		<table width="800px" border=0 align="center">
 			<tr>
-				<td align="right"><input onclick="displayResult('<%=noOfRecords%>')" type = "button" value = "Records" id = "recordsbutton"></input></td>
+				<td align="right"><input
+					onclick="displayResult('<%=noOfRecords%>')" type="button"
+					value="Records" id="recordsbutton"></input></td>
 			</tr>
 		</table>
-		<br/><br/><br/><br/><br/><br/><br/>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 		<table border="0" align="center">
 			<tbody>
 				<tr>
 					<td>Online id :</td>
-					<td><input type="text" name="onlineid" value="" size="20" ></td>
+					<td><input type="text" name="onlineid" value="" size="20"></td>
 				</tr>
 				<tr>
 					<td>PassCode :</td>
@@ -210,13 +225,22 @@
 					</div></td>
 			</tr>
 		</table>
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		<marquee style="background-color:silver;">Gator Bank launches America's first digital
+			application form for opening current accounts; enables account
+			opening in a few seconds.<span class="tab"><span class="tab">Gator Bank pioneers the transformation of
+			crossborder payments in the United States.</span></span><span class="tab"><span class="tab">Gator Bank enables its
+			customers to send money through social media on its GatorBanking app.</span></span>
+		</marquee>
 	</form>
 </body>
 <script language="javascript">
 	function displayResult(records) {
 		var elem = document.getElementById("recordsbutton");
-		if (elem.value=="Records") elem.value = records;
-    	else elem.value = "Records";
+		if (elem.value == "Records")
+			elem.value = records;
+		else
+			elem.value = "Records";
 	}
 </script>
 </html>

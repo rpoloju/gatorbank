@@ -9,13 +9,19 @@
 	background: url(Back2.jpg) no-repeat center center fixed;
 	background-size: cover;
 }
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Over draft accounts</title>
 </head>
 <body>
-<body class="bgstyle"
-	background="${pageContext.request.contextPath}//Back2.jpg">
+<body>
+<img align="middle"
+		src="${pageContext.request.contextPath}//statement.JPG" />
 
 	<table width="800px" border=0 align="center">
 		<tr>
@@ -23,11 +29,6 @@
 				style="color: #000000;">Admin Home</a></td>
 		</tr>
 	</table>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
 	<h3 align="center">Accounts with current balance less than 300</h3>
 
 	<table width="500" border="2" align="center" cellpadding="2"
