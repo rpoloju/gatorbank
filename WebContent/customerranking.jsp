@@ -1,6 +1,6 @@
 <%@ page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +15,7 @@ img {
 <title>Customer Ranking</title>
 </head>
 <body>
-<img align="middle"
+	<img align="middle"
 		src="${pageContext.request.contextPath}//statement.JPG" />
 	<table width="800px" border=0 align="center">
 		<tr>
@@ -23,8 +23,9 @@ img {
 				style="color: #000000;">Admin Home</a></td>
 		</tr>
 	</table>
-	<h3 align="center">|-------------------| Customer Ranking based on banking activity |-------------------|</h3>
-	
+	<h3 align="center">|-------------------| Customer Ranking based on
+		banking activity |-------------------|</h3>
+
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">
 		<tr>
@@ -44,28 +45,28 @@ img {
 
 		<%
 			int rownum = 1;
-				int accountid = 0;
-				int transcount = 0;
-				String dist = "";
-				int rownum1 = 1;
-				int accountid1 = 0;
-				int transcount1 = 0;
-				String dist1 = "";
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
+			int accountid = 0;
+			int transcount = 0;
+			String dist = "";
+			int rownum1 = 1;
+			int accountid1 = 0;
+			float balance2 = 0;
+			String dist1 = "";
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
 
-					String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
-					String username = "rpoloju";
-					String password = "cop5725#";
+				String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
+				String username = "rpoloju";
+				String password = "cop5725#";
 
-					Connection connection = null;
-					Statement st = null;
-					ResultSet rs = null;
-					connection = DriverManager.getConnection(URL, username, password);
-					
-					String sqlrank = "select t1.*, t2.district_name from ( " + " select t.* from ( "
+				Connection connection = null;
+				Statement st = null;
+				ResultSet rs = null;
+				connection = DriverManager.getConnection(URL, username, password);
+
+				String sqlrank = "select t1.*, t2.district_name from ( select t.* from ( "
 						+ " select account_id, count(*) as \"countoftrans\" from transactions where account_id in ( "
-						+ " select distinct account_id from transactions) " + " group by account_id)t "
+						+ " select distinct account_id from transactions)  group by account_id)t "
 						+ " order by t.\"countoftrans\" desc )t1, "
 						+ " (select d.district_name, acc.account_id from district d join account acc on acc.district_id = d.district_id)t2 "
 						+ "where t2.account_id = t1.account_id and rownum < 11";
@@ -100,14 +101,16 @@ img {
 		<%
 			rownum++;
 				}
-				
 		%>
 	</table>
-	
-	
-	<br/><br/><br/>
-	<h3 align="center">|-------------------| Customer ranking based on account balance |-------------------|</h3>
-	
+
+
+	<br />
+	<br />
+	<br />
+	<h3 align="center">|-------------------| Customer ranking based on
+		account balance |-------------------|</h3>
+
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">
 		<tr>
@@ -125,20 +128,19 @@ img {
 				</div></td>
 		</tr>
 
-		<%	
-				
-					String sqlrank1 = "select t1.*, t2.district_name from ( " + " select t.* from ( "
-						+ " select account_id, max(balance) as \"bal\" from transactions where account_id in ( "
-						+ " select distinct account_id from transactions) " + " group by account_id)t "
-						+ " order by t.\"bal\" desc )t1, "
-						+ " (select d.district_name, acc.account_id from district d join account acc on acc.district_id = d.district_id)t2 "
-						+ "where t2.account_id = t1.account_id and rownum < 11";
+		<%
+			String sqlrank1 = "select * from ( select t1.account_id, t1.\"bal\" from ( "
+						+ "select t.account_id, balance as \"bal\" from transactions t where t.account_id in "
+						+ " (select distinct account_id from transactions) and transaction_id = "
+						+ "(select max(transaction_id) from transactions where account_id = t.account_id))t1 order by t1.\"bal\" desc)x, "
+						+ "(select d.district_name, acc.account_id from district d join account acc on acc.district_id = d.district_id)t2 "
+						+ "where t2.account_id = x.account_id and rownum < 11";
 
 				rs = st.executeQuery(sqlrank1);
 				while (rs.next()) {
 					accountid1 = rs.getInt(1);
 
-					transcount1 = rs.getInt(2);
+					balance2 = rs.getFloat(2);
 
 					dist1 = rs.getString(3);
 
@@ -156,20 +158,20 @@ img {
 					<a><%=dist1%></a>
 				</div></td>
 			<td width="15"><div align="center">
-					<a><%=transcount1%></a>
+					<a><%=balance2%></a>
 				</div></td>
 		</tr>
 
 		<%
 			rownum1++;
 
-					}
-					if (connection != null)
-						connection.close();
-				} catch (Exception e) {
-					out.println("Unable to fetch ranking records");
-					e.printStackTrace();
 				}
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				out.println("Customer ranking page is temporarily down. Please refresh!");
+				e.printStackTrace();
+			}
 		%>
 	</table>
 </body>

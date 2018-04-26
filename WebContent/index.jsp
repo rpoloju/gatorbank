@@ -12,10 +12,12 @@
 	background-color: #aaa;
 	padding: 10px;
 }
-.tab { 
-       display:inline-block; 
-       margin-left: 40px; 
+
+.tab {
+	display: inline-block;
+	margin-left: 40px;
 }
+
 .bgstyle {
 	background: url(Back2.jpg) no-repeat center center fixed;
 	background-size: cover;
@@ -176,7 +178,7 @@
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				out.println("Record count fetch failed");
+				out.println("Banking app is temporarily down. Please refresh!");
 				e.printStackTrace();
 			}
 		%>
@@ -189,13 +191,7 @@
 					value="Records" id="recordsbutton"></input></td>
 			</tr>
 		</table>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br /> <br /> <br /> <br /> <br />
 		<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -225,12 +221,29 @@
 					</div></td>
 			</tr>
 		</table>
-		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-		<marquee style="background-color:silver;">Gator Bank launches America's first digital
-			application form for opening current accounts; enables account
-			opening in a few seconds.<span class="tab"><span class="tab">Gator Bank pioneers the transformation of
-			cross border payments in the United States.</span></span><span class="tab"><span class="tab">Gator Bank enables its
-			customers to send money through GatorBanking app.</span></span>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<marquee style="background-color: silver;">
+			Gator Bank launches America's first digital application form for
+			opening current accounts; enables account opening in a few seconds.<span
+				class="tab"><span class="tab">Gator Bank pioneers the
+					transformation of cross border payments in the United States.</span></span><span
+				class="tab"><span class="tab">Gator Bank enables its
+					customers to send money through GatorBanking app.</span></span>
 		</marquee>
 	</form>
 </body>

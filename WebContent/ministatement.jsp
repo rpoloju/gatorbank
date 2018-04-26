@@ -12,14 +12,16 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
 .bgstyle {
-        background: url(Back2.jpg) no-repeat center center fixed;
-        background-size: cover;
+	background: url(Back2.jpg) no-repeat center center fixed;
+	background-size: cover;
 }
 </style>
 <title>Mini Statement</title>
 </head>
-<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+<body class="bgstyle"
+	background="${pageContext.request.contextPath}//Back2.jpg">
 
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<table width="800px" border=0 align="center">
@@ -28,7 +30,13 @@
 					Home</a></td>
 		</tr>
 	</table>
-	<br/><br/><br/><br/><br/><br/><br/>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
 	<%
 		Map<String, String> banks = new HashMap<>();
 		String user = "";
@@ -63,29 +71,29 @@
 		</tr>
 
 		<%
-		int transactionid = 0;
-		int transDate = 0;
-		String type = "";
-		String operation = "";
-		float amount = 0;
-		float balance = 0;
-		int rownum = 1;
-		String bank_id = "";
-		
-		banks.put("MN", "JPMorgan Chase");
-		banks.put("UV", "Bank of America");
-		banks.put("OP", "Wells Fargo");
-		banks.put("YZ", "Citi");
-		banks.put("CD", "Goldman Sachs");
-		banks.put("KL", "Morgan Stanley");
-		banks.put("IJ", "U.S. Bancorp");
-		banks.put("WX", "PNC Financial Services");
-		banks.put("EF", "Bank of New York Mellon");
-		banks.put("QR", "Capital One");
-		banks.put("ST", "State Street");
-		banks.put("GH", "SunTrust Banks");
-		banks.put("AB", "HSBC USA");
-			try {
+			int transactionid = 0;
+				int transDate = 0;
+				String type = "";
+				String operation = "";
+				float amount = 0;
+				float balance = 0;
+				int rownum = 1;
+				String bank_id = "";
+
+				banks.put("MN", "JPMorgan Chase");
+				banks.put("UV", "Bank of America");
+				banks.put("OP", "Wells Fargo");
+				banks.put("YZ", "Citi");
+				banks.put("CD", "Goldman Sachs");
+				banks.put("KL", "Morgan Stanley");
+				banks.put("IJ", "U.S. Bancorp");
+				banks.put("WX", "PNC Financial Services");
+				banks.put("EF", "Bank of New York Mellon");
+				banks.put("QR", "Capital One");
+				banks.put("ST", "State Street");
+				banks.put("GH", "SunTrust Banks");
+				banks.put("AB", "HSBC USA");
+				try {
 					Class.forName("oracle.jdbc.OracleDriver");
 
 					String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
@@ -96,18 +104,20 @@
 					Statement st = null;
 					ResultSet rs = null;
 					connection = DriverManager.getConnection(URL, username, password);
-					String sqlminist = "select t.* from (select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE, BANK_ID from TRANSACTIONS where account_id = " + Integer.parseInt(user) + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc)t where ROWNUM <= 10";
-					
+					String sqlminist = "select t.* from (select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE, BANK_ID from TRANSACTIONS where account_id = "
+							+ Integer.parseInt(user)
+							+ " order by DATE_OF_TRANS desc, TRANSACTION_ID desc)t where ROWNUM <= 10";
+
 					st = connection.createStatement();
 					rs = st.executeQuery(sqlminist);
 					while (rs.next()) {
 						transactionid = rs.getInt(1);
-						
+
 						//Get transaction date in the required format
 						transDate = rs.getInt(2);
 						String tDate = Integer.toString(transDate);
 						tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
-					
+
 						//Resolve the type
 						type = rs.getString(4);
 						String transType = "";
@@ -116,11 +126,11 @@
 						} else {
 							transType = "Debit";
 						}
-						
+
 						amount = rs.getFloat(5);
 						balance = rs.getFloat(6);
 						bank_id = rs.getString(7);
-						
+
 						//Resolve Operation
 						operation = rs.getString(3);
 						String op = "";
@@ -138,39 +148,40 @@
 							op = "Remittance to another bank - " + banks.get(bank_id);
 						}
 						//Display the values in table
-						%>
+		%>
 
 		<tr>
 			<td width="20"><div align="center">
 					<a><%=rownum%></a>
 				</div></td>
 			<td width="20"><div align="center">
-					<a><%=transactionid %></a>
+					<a><%=transactionid%></a>
 				</div></td>
 			<td width="90"><div align="center">
-					<a><%=tDate %></a>
+					<a><%=tDate%></a>
 				</div></td>
 			<td width="340"><div align="left">
-					<a><%=op %></a>
+					<a><%=op%></a>
 				</div></td>
 			<td width="50"><div align="center">
-					<a><%=transType %></a>
+					<a><%=transType%></a>
 				</div></td>
 			<td width="100"><div align="center">
-					<a><%=amount %></a>
+					<a><%=amount%></a>
 				</div></td>
 			<td width="75"><div align="center">
-					<a><%=balance %></a>
+					<a><%=balance%></a>
 				</div></td>
 		</tr>
 
-		<% rownum++;
-						
+		<%
+			rownum++;
+
 					}
 					if (connection != null)
 						connection.close();
 				} catch (Exception e) {
-					out.println("Statement retrieval failed");
+					out.println("Mini Statement page is temporarily down. Please refresh!");
 					e.printStackTrace();
 				}
 		%>

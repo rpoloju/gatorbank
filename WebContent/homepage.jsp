@@ -10,14 +10,16 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
 .bgstyle {
-        background: url(Back2.jpg) no-repeat center center fixed;
-        background-size: cover;
+	background: url(Back2.jpg) no-repeat center center fixed;
+	background-size: cover;
 }
 </style>
 <title>Your Account home</title>
 </head>
-<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+<body class="bgstyle"
+	background="${pageContext.request.contextPath}//Back2.jpg">
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<br />
 
@@ -56,7 +58,7 @@
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				out.println("Login failed");
+				out.println("Customer homepage is temporarily down. Please refresh!");
 				e.printStackTrace();
 			}
 	%>
@@ -76,7 +78,9 @@
 	<%} else { %>
 	<h3>No transactions for this account.</h3>
 	<%} %>
-	<br/><br/><br/>
+	<br />
+	<br />
+	<br />
 	<table border="0" align="center">
 		<tbody>
 			<tr>

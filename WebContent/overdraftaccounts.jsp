@@ -9,6 +9,7 @@
 	background: url(Back2.jpg) no-repeat center center fixed;
 	background-size: cover;
 }
+
 img {
 	display: block;
 	margin-left: auto;
@@ -20,7 +21,7 @@ img {
 </head>
 <body>
 <body>
-<img align="middle"
+	<img align="middle"
 		src="${pageContext.request.contextPath}//statement.JPG" />
 
 	<table width="800px" border=0 align="center">
@@ -29,7 +30,7 @@ img {
 				style="color: #000000;">Admin Home</a></td>
 		</tr>
 	</table>
-	<h3 align="center">Accounts with current balance less than 300</h3>
+	<h3 align="center">Accounts with current balance less than 0</h3>
 
 	<table width="500" border="2" align="center" cellpadding="2"
 		cellspacing="2">
@@ -50,38 +51,38 @@ img {
 
 		<%
 			int rownum = 1;
-				int accountid = 0;
-				int transDate = 0;
-				float balance = 0;
-				try {
-					Class.forName("oracle.jdbc.OracleDriver");
+			int accountid = 0;
+			int transDate = 0;
+			float balance = 0;
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
 
-					String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
-					String username = "rpoloju";
-					String password = "cop5725#";
+				String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
+				String username = "rpoloju";
+				String password = "cop5725#";
 
-					Connection connection = null;
-					Statement st = null;
-					ResultSet rs = null;
-					connection = DriverManager.getConnection(URL, username, password);
-					String sqloverdraft = "SELECT t1.account_id, t1.DATE_OF_TRANS, t1.BALANCE "
-							+ "FROM transactions t1 " + "LEFT OUTER JOIN transactions t2 "
-							+ "ON (t1.account_id = t2.account_id AND t1.transaction_id < t2.transaction_id) "
-							+ "WHERE t2.account_id IS NULL and t1.balance < 300 order by t1.account_id desc";
+				Connection connection = null;
+				Statement st = null;
+				ResultSet rs = null;
+				connection = DriverManager.getConnection(URL, username, password);
+				String sqloverdraft = "SELECT t1.account_id, t1.DATE_OF_TRANS, t1.BALANCE " + "FROM transactions t1 "
+						+ "LEFT OUTER JOIN transactions t2 "
+						+ "ON (t1.account_id = t2.account_id AND t1.transaction_id < t2.transaction_id) "
+						+ "WHERE t2.account_id IS NULL and t1.balance < 0 order by t1.account_id desc";
 
-					st = connection.createStatement();
-					rs = st.executeQuery(sqloverdraft);
-					while (rs.next()) {
-						accountid = rs.getInt(1);
+				st = connection.createStatement();
+				rs = st.executeQuery(sqloverdraft);
+				while (rs.next()) {
+					accountid = rs.getInt(1);
 
-						//Get transaction date in the required format
-						transDate = rs.getInt(2);
-						String tDate = Integer.toString(transDate);
-						tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
+					//Get transaction date in the required format
+					transDate = rs.getInt(2);
+					String tDate = Integer.toString(transDate);
+					tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
 
-						balance = rs.getFloat(3);
+					balance = rs.getFloat(3);
 
-						//Display the values in table
+					//Display the values in table
 		%>
 
 		<tr>
@@ -102,13 +103,13 @@ img {
 		<%
 			rownum++;
 
-					}
-					if (connection != null)
-						connection.close();
-				} catch (Exception e) {
-					out.println("Unable to fetch over draft records");
-					e.printStackTrace();
 				}
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				out.println("Over drafts page is temporarily down. Please refresh!");
+				e.printStackTrace();
+			}
 		%>
 	</table>
 

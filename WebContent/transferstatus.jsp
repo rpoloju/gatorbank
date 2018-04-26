@@ -10,7 +10,7 @@
 	background-size: cover;
 }
 </style>
-<title>Insert title here</title>
+<title>Transfer Status</title>
 </head>
 <body class="bgstyle"
 	background="${pageContext.request.contextPath}//Back2.jpg">
@@ -35,16 +35,25 @@
 		}
 	%>
 
-	<%if (status > 0) { %>
-	<h3 align="center">Transaction Successful. Press on the home button to continue.</h3>
-	<h3 align="center">Transaction id: <%=session.getAttribute("tid") %></h3>
-	<%} else { %>
+	<%
+		if (status > 0) {
+	%>
+	<h3 align="center">Transaction Successful. Press on the home
+		button to continue.</h3>
+	<h3 align="center">
+		Transaction id:
+		<%=session.getAttribute("tid")%></h3>
+	<%
+		} else {
+	%>
 	<h3>Transaction Failed. The reason could be one of the following.</h3>
-	<ul >
-  		<li>User id might not exist.</li>
-  		<li>Insufficient Balance.</li>
-  		<li>System temporarily down for maintenance.</li>
+	<ul>
+		<li>User id might not exist.</li>
+		<li>Insufficient Balance.</li>
+		<li>System temporarily down for maintenance.</li>
 	</ul>
-	<%} %>
+	<%
+		}
+	%>
 </body>
 </html>

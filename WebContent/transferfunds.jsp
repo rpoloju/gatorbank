@@ -13,14 +13,16 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
 .bgstyle {
-        background: url(Back2.jpg) no-repeat center center fixed;
-        background-size: cover;
+	background: url(Back2.jpg) no-repeat center center fixed;
+	background-size: cover;
 }
 </style>
 <title>Transfer funds</title>
 </head>
-<body class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" >
+<body class="bgstyle"
+	background="${pageContext.request.contextPath}//Back2.jpg">
 	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
 	<form name="transferPage" action="redirecttransferPage.jsp"
 		method="POST" onsubmit="return validTransfer();">
@@ -89,11 +91,16 @@
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				out.println("Login failed");
+				out.println("Transfer page is temporarily down. Please refresh!");
 				e.printStackTrace();
 			}
 		%>
-		<br/><br/><br/><br/><br/><br/>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 		<table border="0" align="center">
 			<tbody>
 				<tr>
@@ -118,7 +125,7 @@
 							<%
 								}
 							%>
-							
+
 					</select></td>
 				</tr>
 				<tr>

@@ -1,6 +1,6 @@
 <%@ page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,29 +10,32 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
 .bgstyle {
-        background: url(Back2.jpg) no-repeat center center fixed;
-        background-size: cover;
+	background: url(Back2.jpg) no-repeat center center fixed;
+	background-size: cover;
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Changed passcode</title>
 </head>
-<body  class="bgstyle" background="${pageContext.request.contextPath}//Back2.jpg" onload="displayResult()">
-	<form name = "updatepage">
-	<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
-	<table width="800px" border=0 align="center">
-		<tr>
-			<td align="right"><a href="index.jsp"
-				style="color: #000000;">Home</a></td>
-		</tr>
-	</table>
-	<%
+<body class="bgstyle"
+	background="${pageContext.request.contextPath}//Back2.jpg"
+	onload="displayResult()">
+	<form name="updatepage">
+		<!-- <h1 class="myclass" align="center">Welcome to GatorBank</h1> -->
+		<table width="800px" border=0 align="center">
+			<tr>
+				<td align="right"><a href="index.jsp" style="color: #000000;">Home</a></td>
+			</tr>
+		</table>
+		<%
 	try {
 		Class.forName("oracle.jdbc.OracleDriver");
 
 		String usernameFromForm = request.getParameter("onlineid");
-		String passcodeFromForm = request.getParameter("passcode1");
+		String passcodeFromForm1 = request.getParameter("passcode1");
+		String passcodeFromForm2 = request.getParameter("passcode2");
 		String dobFromForm = request.getParameter("dob");
 		int success = 0;
 		int dobtocheck = 0;
@@ -73,15 +76,19 @@
 			}
 		}
 		
-		if (toBeProcessed) {
-			String updatePasscode = "UPDATE USERS SET PASSCODE = " + passcodeFromForm + "WHERE USER_ID = " + usernameFromForm;
+		if (toBeProcessed && passcodeFromForm1.equals(passcodeFromForm2)) {
+			String updatePasscode = "UPDATE USERS SET PASSCODE = " + passcodeFromForm1 + "WHERE USER_ID = " + usernameFromForm;
 			success = st.executeUpdate(updatePasscode);
 			connection.commit();
 			%>
-			
-			<input type = "hidden" name = "hidden" value = "<%=success %>"/>
-			
-			<%
+
+		<input type="hidden" name="hidden" value="<%=success %>" />
+
+		<%
+		} else {
+			%>
+		<input type="hidden" name="hidden" value="<%=success %>" />
+		<%
 		}
 		if (connection != null)
 			connection.close();
@@ -99,7 +106,7 @@
 		if (document.updatepage.hidden.value > 0) {
 			alert("Successfully updated");
 		} else {
-			alert("Please try again");
+			alert("Invalid entry. Click on home button to try again!");
 		}
 	}
 </script>

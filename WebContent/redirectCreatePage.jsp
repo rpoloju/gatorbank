@@ -168,7 +168,7 @@
 			if (connection != null)
 				connection.close();
 		} catch (Exception e) {
-			out.println("Create account failed");
+			out.println("Account opening page is temporarily down. Please refresh!");
 			e.printStackTrace();
 		}
 	%>

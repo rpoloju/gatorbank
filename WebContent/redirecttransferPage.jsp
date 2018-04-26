@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body class="bgstyle"
-	background="${pageContext.request.contextPath}//Back2.jpg" >
+	background="${pageContext.request.contextPath}//Back2.jpg">
 	<table width="800px" border=0 align="center">
 		<tr>
 			<td align="right"><a href="homepage.jsp" style="color: #000000;">Account
@@ -196,7 +196,7 @@
 			if (connection != null)
 				connection.close();
 		} catch (Exception e) {
-			out.println("Transfer failed");
+			out.println("Transfer page is temporarily down. Please refresh!");
 			e.printStackTrace();
 		}
 	%>

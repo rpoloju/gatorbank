@@ -12,6 +12,7 @@
 	background-color: #aaa;
 	padding: 10px;
 }
+
 img {
 	display: block;
 	margin-left: auto;
@@ -60,7 +61,7 @@ img {
 			float balance = 0;
 			int rownum = 1;
 			float accountBalance = 0;
-			
+
 			banks.put("MN", "JPMorgan Chase");
 			banks.put("UV", "Bank of America");
 			banks.put("OP", "Wells Fargo");
@@ -74,7 +75,7 @@ img {
 			banks.put("ST", "State Street");
 			banks.put("GH", "SunTrust Banks");
 			banks.put("AB", "HSBC USA");
-			
+
 			try {
 				Class.forName("oracle.jdbc.OracleDriver");
 
@@ -114,8 +115,10 @@ img {
 					dateOfB = rs.getString(1);
 					dateOfB = dateOfB.substring(4, 6) + "-" + dateOfB.substring(6, 8) + "-"
 							+ dateOfB.substring(0, 4);
-					if (dateOfB.charAt(0) == '5') dateOfB = "0" + dateOfB.substring(1);
-					if (dateOfB.charAt(0) == '6') dateOfB = "1" + dateOfB.substring(1);
+					if (dateOfB.charAt(0) == '5')
+						dateOfB = "0" + dateOfB.substring(1);
+					if (dateOfB.charAt(0) == '6')
+						dateOfB = "1" + dateOfB.substring(1);
 				}
 
 				//Get district from account table
@@ -126,9 +129,7 @@ img {
 				if (rs.next()) {
 					dist = rs.getString(1);
 				}
-
-				
-				%>
+	%>
 
 	<table align="center">
 		<tr>
@@ -189,51 +190,51 @@ img {
 
 
 		<%
-				//Get transactions from transactions table
-				String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE, BANK_ID from TRANSACTIONS "
-						+ " where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS <= " + eDate
-						+ " and DATE_OF_TRANS >= " + stDate + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc";
+			//Get transactions from transactions table
+					String sqlminist = "select TRANSACTION_ID, DATE_OF_TRANS, OPERATION, TYPE_OF_TRANS, AMOUNT, BALANCE, BANK_ID from TRANSACTIONS "
+							+ " where account_id = " + Integer.parseInt(user) + " and DATE_OF_TRANS <= " + eDate
+							+ " and DATE_OF_TRANS >= " + stDate + " order by DATE_OF_TRANS desc, TRANSACTION_ID desc";
 
-				rs = st.executeQuery(sqlminist);
-				while (rs.next()) {
-					transactionid = rs.getInt(1);
+					rs = st.executeQuery(sqlminist);
+					while (rs.next()) {
+						transactionid = rs.getInt(1);
 
-					//Get transaction date in the required format
-					transDate = rs.getInt(2);
-					String tDate = Integer.toString(transDate);
-					tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
+						//Get transaction date in the required format
+						transDate = rs.getInt(2);
+						String tDate = Integer.toString(transDate);
+						tDate = tDate.substring(4, 6) + "-" + tDate.substring(6, 8) + "-" + tDate.substring(0, 4);
 
-					//Resolve the type
-					type = rs.getString(4);
-					String transType = "";
-					if (type.trim().toUpperCase().equals("PRIJEM")) {
-						transType = "Credit";
-					} else {
-						transType = "Debit";
-					}
+						//Resolve the type
+						type = rs.getString(4);
+						String transType = "";
+						if (type.trim().toUpperCase().equals("PRIJEM")) {
+							transType = "Credit";
+						} else {
+							transType = "Debit";
+						}
 
-					amount = rs.getFloat(5);
-					balance = rs.getFloat(6);
-					bank_id = rs.getString(7);
-					
-					//Resolve Operation
-					operation = rs.getString(3);
-					String op = "";
-					if (operation == null) {
-						op = "Interest Credited";
-					} else if (operation.trim().toUpperCase().equals("VYBER KARTOU")) {
-						op = "Credit Card Withdrawal";
-					} else if (operation.trim().toUpperCase().equals("VKLAD")) {
-						op = "Credit in Cash / Transfer within GatorBank";
-					} else if (operation.trim().toUpperCase().equals("PREVOD Z UCTU")) {
-						op = "Collected from another bank - " + banks.get(bank_id);
-					} else if (operation.trim().toUpperCase().equals("VYBER")) {
-						op = "Withdrawal in Cash / Transfer within GatorBank";
-					} else {
-						op = "Remittance to another bank - " + banks.get(bank_id);
-					}
-					//Display the values in table
-	%>
+						amount = rs.getFloat(5);
+						balance = rs.getFloat(6);
+						bank_id = rs.getString(7);
+
+						//Resolve Operation
+						operation = rs.getString(3);
+						String op = "";
+						if (operation == null) {
+							op = "Interest Credited";
+						} else if (operation.trim().toUpperCase().equals("VYBER KARTOU")) {
+							op = "Credit Card Withdrawal";
+						} else if (operation.trim().toUpperCase().equals("VKLAD")) {
+							op = "Credit in Cash / Transfer within GatorBank";
+						} else if (operation.trim().toUpperCase().equals("PREVOD Z UCTU")) {
+							op = "Collected from another bank - " + banks.get(bank_id);
+						} else if (operation.trim().toUpperCase().equals("VYBER")) {
+							op = "Withdrawal in Cash / Transfer within GatorBank";
+						} else {
+							op = "Remittance to another bank - " + banks.get(bank_id);
+						}
+						//Display the values in table
+		%>
 
 		<tr>
 			<td width="20"><div align="center">
@@ -266,7 +267,7 @@ img {
 					if (connection != null)
 						connection.close();
 				} catch (Exception e) {
-					out.println("Statement retrieval failed");
+					out.println("Detailed statement page is temporarily down. Please refresh!");
 					e.printStackTrace();
 				}
 		%>
