@@ -30,33 +30,36 @@
 	<br />
 
 	<%
-	try {
-		Class.forName("oracle.jdbc.OracleDriver");
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
 
-		int assets = 0;
-		String assetsString = "";
-		
-		String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
-		String username = "rpoloju";
-		String password = "cop5725#";
-		Connection connection = null;
-		Statement st = null;
-		ResultSet rs = null;
-		connection = DriverManager.getConnection(URL, username, password);
-		st = connection.createStatement();
-		
-		String totalassets = "select sum(t1.\"bal\") from ( " +               
-				" select t.account_id, balance as \"bal\" from transactions t where t.account_id in (select distinct account_id from transactions) and transaction_id = " + 
-	            " (select max(transaction_id) from transactions where account_id = t.account_id))t1";
-		rs = st.executeQuery(totalassets);
-		if (rs.next()) {
-			assets = rs.getInt(1);
-		}
-		assetsString = Integer.toString(assets);
-		assetsString = assetsString.substring(0, 3) + ", " + assetsString.substring(3, 6) + ", " + assetsString.substring(6, 9);
-		if (connection != null)
-			connection.close();
-		%>
+			int assets = 0;
+			String assetsString = "";
+			
+			String URL = "jdbc:oracle:thin:@//oracle.cise.ufl.edu:1521/orcl";
+			String username = "rpoloju";
+			String password = "cop5725#";
+			Connection connection = null;
+			Statement st = null;
+			ResultSet rs = null;
+			connection = DriverManager.getConnection(URL, username, password);
+			st = connection.createStatement();
+			
+			String totalassets = "select sum(t1.\"bal\") from ( "
+					+ " select t.account_id, balance as \"bal\" from transactions t where t.account_id in "
+					+ "(select distinct account_id from transactions) and transaction_id = "
+					+ " (select max(transaction_id) from transactions where account_id = t.account_id))t1";
+			
+			rs = st.executeQuery(totalassets);
+			if (rs.next()) {
+				assets = rs.getInt(1);
+			}
+			assetsString = Integer.toString(assets);
+			assetsString = assetsString.substring(0, 3) + ", " + assetsString.substring(3, 6) + ", "
+					+ assetsString.substring(6, 9);
+			if (connection != null)
+				connection.close();
+	%>
 	<h2 align="center">
 		Bank Capital - $<%=assetsString %></h2>
 	<%
